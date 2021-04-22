@@ -1,12 +1,14 @@
 cormatrix <- function(x){
   if(!require(Hmisc)) install.packages("Hmisc")
   if(!require(Hmisc)) require(Hmisc)
+  if(!is.data.frame(x) && !is.matrix(x)) warning("need to convert the object to a data frame or a matrix")
+
   cormatrix <- rcorr(as.matrix(x))
   cormatrix.r <- cormatrix[[1]]
   cormatrix.p <- cormatrix[[3]]
   cormatrix.N <- cormatrix[[2]]
-  cormatrix.rANDp<-matrix(NA,nrow=nrow(cormatrix.r),ncol=ncol(cormatrix.r))
-  colnames(cormatrix.rANDp)<-colnames(cormatrix.r)
+  cormatrix.rANDp <- matrix(NA, nrow=nrow(cormatrix.r), ncol=ncol(cormatrix.r))
+  colnames(cormatrix.rANDp) <- colnames(cormatrix.r)
   for (i in seq_len(nrow(cormatrix.r))) {
     for (j in seq_len(ncol(cormatrix.r))){
       if (
